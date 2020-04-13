@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.heeexy.example.dao.StudentsDao">
+
+    <insert id="addStudents" parameterType="com.alibaba.fastjson.JSONObject">
+        INSERT INTO students
+            (`user` , sname , snum , school)
+        VALUES
+            (#{user} , #{sname} , #{snum} , #{school})
+    </insert>
+
+    <select id="countStudents" resultType="Integer">
+        SELECT count(0)
+        FROM students w
+    </select>
+
+    <select id="listStudents" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+            w.id                                      id,
+            w.sname                                 sname,
+            w.snum                                     snum,
+            w.school                                    school
+        FROM students w
+        ORDER BY w.id DESC
+    </select>
+
+    <update id="updateStudents" parameterType="com.alibaba.fastjson.JSONObject">
+        UPDATE students
+        SET
+            sname = #{sname},
+            snum = #{snum},
+            school = #{school}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

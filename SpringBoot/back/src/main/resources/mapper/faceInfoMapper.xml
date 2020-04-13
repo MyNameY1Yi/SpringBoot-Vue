@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.heeexy.example.dao.faceInfoDao">
+    <insert id="addfaceInfo" parameterType="com.alibaba.fastjson.JSONObject">
+        insert into unpassed_faceInfo
+            (`user` , `number` , `faceImg`) values (#{user} , #{number} , #{faceImg}) ;
+    </insert>
+
+    <insert id="addPassedfaceInfo" parameterType="com.alibaba.fastjson.JSONObject">
+        insert into passed_faceInfo
+            (`user` , `number` , `faceImg`) values (#{user} , #{number} , #{faceImg}) ;
+    </insert>
+
+    <select id="listAllfaceInfo" resultType="com.alibaba.fastjson.JSONObject">
+        select *
+        from unpassed_faceInfo ;
+    </select>
+
+    <select id="listfaceInfo" parameterType="com.alibaba.fastjson.JSONObject" resultType="com.alibaba.fastjson.JSONObject">
+        select *
+        from status_faceInfo
+        where `user` = #{user} ;
+    </select>
+
+    <delete id="delfaceInfo" parameterType="com.alibaba.fastjson.JSONObject">
+        delete
+        from unpassed_faceInfo
+        where `user` = #{user} ;
+    </delete>
+
+    <update id="updfaceInfo" parameterType="com.alibaba.fastjson.JSONObject">
+        update status_faceinfo
+        set `number`=#{number} , `status`=#{status}
+        where `user` = #{user} ;
+    </update>
+
+    <select id="QueryExist" parameterType="com.alibaba.fastjson.JSONObject" resultType="java.lang.Integer">
+        select count(1)
+        from status_faceInfo
+        where `user` = #{user} limit 1;
+    </select>
+
+    <insert id="addItem" parameterType="com.alibaba.fastjson.JSONObject">
+        insert into status_faceInfo
+            (`user` , `number` , `status`) values (#{user} , "null" , 0) ;
+    </insert>
+
+    <delete id="cancelApply" parameterType="com.alibaba.fastjson.JSONObject">
+        delete
+        from unpassed_faceInfo
+        where `user`=#{user} ;
+    </delete>
+
+    <delete id="cancelPassedApply" parameterType="com.alibaba.fastjson.JSONObject">
+        delete
+        from passed_faceInfo
+        where `user`=#{user} ;
+    </delete>
+
+</mapper>
